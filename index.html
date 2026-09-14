@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>شات طحون</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#f3f5f7;display:flex;justify-content:center;height:100vh}
+.app{width:min(700px,100%);display:flex;flex-direction:column;background:white}
+header{padding:18px;text-align:center;background:#111827;color:white;font-size:24px;font-weight:bold}
+#messages{flex:1;overflow:auto;padding:18px}
+.msg{max-width:80%;padding:12px 15px;margin:10px 0;border-radius:16px;line-height:1.6;white-space:pre-wrap}
+.user{margin-right:auto;background:#dbeafe}
+.bot{margin-left:auto;background:#eee}
+form{display:flex;gap:8px;padding:12px;border-top:1px solid #ddd}
+input{flex:1;padding:13px;border:1px solid #bbb;border-radius:12px;font-size:16px}
+button{padding:0 18px;border:0;border-radius:12px;background:#111827;color:white;font-size:16px}
+</style>
+</head>
+<body>
+<div class="app">
+<header>شات طحون 🤖</header>
+<div id="messages"><div class="msg bot">أهلاً بيك يا عمي 👋<br>أنا شات طحون. اكتب رسالتك تحت.</div></div>
+<form id="form">
+<input id="input" autocomplete="off" placeholder="اكتب رسالتك...">
+<button>إرسال</button>
+</form>
+</div>
+<script>
+const messages=document.getElementById('messages'), input=document.getElementById('input');
+document.getElementById('form').addEventListener('submit',e=>{
+ e.preventDefault();
+ const text=input.value.trim(); if(!text)return;
+ add(text,'user'); input.value='';
+ setTimeout(()=>add(reply(text),'bot'),350);
+});
+function add(text,cls){
+ const d=document.createElement('div'); d.className='msg '+cls; d.textContent=text;
+ messages.appendChild(d); messages.scrollTop=messages.scrollHeight;
+}
+function reply(t){
+ if(/السلام|اهلا|أهلا|هاي|hello/i.test(t)) return 'أهلاً وسهلاً يا عمي! 😄';
+ if(t.includes('اسمك')) return 'اسمي شات طحون 🤖';
+ if(t.includes('عامل ايه')||t.includes('ازيك')) return 'تمام يا عمي، زي الفل!';
+ return 'وصلت رسالتك يا عمي 👍\nدي نسخة تجريبية من شات طحون. عشان يبقى ذكاء اصطناعي حقيقي ويرد على أي سؤال، هنربطه لاحقًا بخدمة ذكاء اصطناعي.';
+}
+</script>
+</body>
+</html>
